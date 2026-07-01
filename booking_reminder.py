@@ -22,7 +22,7 @@ def notify(text):
     data = json.dumps({"content": text}).encode("utf-8")
     req = urllib.request.Request(
         DISCORD_WEBHOOK, data=data,
-        headers={"Content-Type": "application/json"},
+        headers={"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
     )
     urllib.request.urlopen(req, timeout=15)
 
