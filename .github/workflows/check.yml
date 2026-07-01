@@ -1,0 +1,29 @@
+name: 기차 좌석 조회
+
+on:
+  # 좌석 잔여석 조회(B1)는 일단 보류 — 자동실행 꺼둠.
+  # 쓰고 싶으면 아래 schedule 주석 풀고 routes.json 날짜를 실제로 채우면 됨.
+  # schedule:
+  #   - cron: "*/5 * * * *"   # 5분마다
+  workflow_dispatch:          # 지금은 버튼으로 수동 실행만 가능
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: 좌석 조회
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          KORAIL_ID: ${{ secrets.KORAIL_ID }}
+          KORAIL_PW: ${{ secrets.KORAIL_PW }}
+          SRT_ID: ${{ secrets.SRT_ID }}
+          SRT_PW: ${{ secrets.SRT_PW }}
+        run: python check_trains.py

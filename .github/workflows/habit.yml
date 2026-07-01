@@ -1,0 +1,20 @@
+name: 습관 알림 (눈·목 스트레칭)
+
+on:
+  schedule:
+    # KST 9,10,11,13,14,15,16,17,18시 (12시 제외), 평일만.  UTC = KST-9
+    - cron: "0 0,1,2,4,5,6,7,8,9 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 습관 알림 전송
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: python habit.py

@@ -1,0 +1,20 @@
+name: 예매 오픈일 리마인더
+
+on:
+  schedule:
+    - cron: "0 10 * * *"   # 매일 KST 19시 (UTC 10시)
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install python-dateutil
+      - name: 예매 오픈 리마인더 전송
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: python booking_reminder.py

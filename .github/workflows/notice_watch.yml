@@ -1,0 +1,32 @@
+name: 공지 감시 (코레일·SRT 명절/공휴일)
+
+on:
+  schedule:
+    - cron: "0 0,4,10 * * *"   # KST 9,13,19시
+  workflow_dispatch:
+
+permissions:
+  contents: write   # notices_state.json 커밋용
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests beautifulsoup4
+      - name: 공지 감시
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: python notice_watch.py
+      - name: 상태 저장 (변경 시 커밋)
+        run: |
+          if ! git diff --quiet notices_state.json; then
+            git config user.name "github-actions"
+            git config user.email "actions@github.com"
+            git add notices_state.json
+            git commit -m "update notice state [skip ci]"
+            git push
+          fi

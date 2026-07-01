@@ -1,0 +1,6 @@
+[
+  { "operator": "korail", "dep": "서울", "arr": "마산", "date": "20260801", "time": "040000" },
+  { "operator": "korail", "dep": "마산", "arr": "서울", "date": "20260803", "time": "140000" },
+  { "operator": "srt",    "dep": "수서", "arr": "마산", "date": "20260801", "time": "040000" },
+  { "operator": "srt",    "dep": "마산", "arr": "수서", "date": "20260803", "time": "140000" }
+]
