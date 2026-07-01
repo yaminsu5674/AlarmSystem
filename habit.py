@@ -1,9 +1,7 @@
 """
 습관 알림: 눈운동 + 목(거북목) 스트레칭 가이드를 디스코드로 전송.
 평일 9~18시(12시 제외) 매 정시에 GitHub Actions가 실행.
-시간대에 따라 가이드를 바꿔서 매번 다른 운동을 안내한다.
-그림(치와와=눈운동 / 시라소니=목스트레칭)을 넣으려면 아래 EYE_IMG/NECK_IMG에
-디스코드에 올린 이미지 URL을 채워라. 비워두면 그림 없이 텍스트로만 간다.
+시간대에 따라 가이드를 바꿔서 매번 다른 운동을 안내한다. (그림 없이 텍스트 카드)
 """
 import os
 import json
@@ -31,18 +29,6 @@ NECK = [
     "🦴 **어깨 으쓱** — 어깨를 귀까지 올렸다가 툭 떨어뜨리기 ×10회. 긴장 해소.",
 ]
 
-# ── 캐릭터 그림 URL (imgur 또는 '공개' GitHub repo raw 주소 권장) ──
-# ※ 디스코드에 올린 이미지 링크는 24시간 뒤 만료되니 쓰지 말 것!
-# EYE와 같은 순서로 넣으면 운동마다 다른 그림. 1장만 넣으면 매번 그 그림 사용.
-# jsDelivr CDN: 디스코드 임베드가 잘 읽고, 옛 404 캐시도 새 도메인이라 무시됨
-_RAW = "https://cdn.jsdelivr.net/gh/yaminsu5674/AlarmSystem@main/images"
-EYE_IMG = [f"{_RAW}/eye_{i}.png" for i in range(5)]    # 치와와 눈운동 5포즈
-NECK_IMG = [f"{_RAW}/neck_{i}.png" for i in range(5)]  # 시라소니 목스트레칭 5포즈
-
-
-def pick_img(lst, idx):
-    return lst[idx % len(lst)] if lst else None
-
 
 def send(payload):
     data = json.dumps(payload).encode("utf-8")
@@ -58,27 +44,12 @@ def main():
     kst = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
     idx = kst.hour  # 시간마다 다른 운동
 
-    eye_embed = {
-        "title": "👀 눈운동",
-        "description": EYE[idx % len(EYE)],
-        "color": 0xFFD166,
-    }
-    eye_img = pick_img(EYE_IMG, idx)
-    if eye_img:
-        eye_embed["image"] = {"url": eye_img}
-
-    neck_embed = {
-        "title": "🦴 목 스트레칭",
-        "description": NECK[idx % len(NECK)],
-        "color": 0x06D6A0,
-    }
-    neck_img = pick_img(NECK_IMG, idx)
-    if neck_img:
-        neck_embed["image"] = {"url": neck_img}
-
     payload = {
         "content": f"🧘 **{kst.hour}시 스트레칭 타임!** 잠깐 일어나서 1분만 움직여요 💪",
-        "embeds": [eye_embed, neck_embed],
+        "embeds": [
+            {"title": "👀 눈운동", "description": EYE[idx % len(EYE)], "color": 0xFFD166},
+            {"title": "🦴 목 스트레칭", "description": NECK[idx % len(NECK)], "color": 0x06D6A0},
+        ],
     }
     send(payload)
     print(f"습관 알림 전송 ({kst.hour}시)")
