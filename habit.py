@@ -34,7 +34,8 @@ NECK = [
 # ── 캐릭터 그림 URL (imgur 또는 '공개' GitHub repo raw 주소 권장) ──
 # ※ 디스코드에 올린 이미지 링크는 24시간 뒤 만료되니 쓰지 말 것!
 # EYE와 같은 순서로 넣으면 운동마다 다른 그림. 1장만 넣으면 매번 그 그림 사용.
-_RAW = "https://raw.githubusercontent.com/yaminsu5674/AlarmSystem/main/images"
+# jsDelivr CDN: 디스코드 임베드가 잘 읽고, 옛 404 캐시도 새 도메인이라 무시됨
+_RAW = "https://cdn.jsdelivr.net/gh/yaminsu5674/AlarmSystem@main/images"
 EYE_IMG = [f"{_RAW}/eye_{i}.png" for i in range(5)]    # 치와와 눈운동 5포즈
 NECK_IMG = [f"{_RAW}/neck_{i}.png" for i in range(5)]  # 시라소니 목스트레칭 5포즈
 
