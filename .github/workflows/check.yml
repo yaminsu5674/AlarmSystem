@@ -22,6 +22,7 @@ jobs:
       - name: 좌석 조회
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_TRAIN: ${{ secrets.DISCORD_WEBHOOK_TRAIN }}
           KORAIL_ID: ${{ secrets.KORAIL_ID }}
           KORAIL_PW: ${{ secrets.KORAIL_PW }}
           SRT_ID: ${{ secrets.SRT_ID }}

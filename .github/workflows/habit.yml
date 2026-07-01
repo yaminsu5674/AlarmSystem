@@ -17,4 +17,5 @@ jobs:
       - name: 습관 알림 전송
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_HABIT: ${{ secrets.DISCORD_WEBHOOK_HABIT }}
         run: python habit.py

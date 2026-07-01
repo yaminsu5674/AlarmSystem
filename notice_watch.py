@@ -13,7 +13,8 @@ import urllib.request
 import requests
 from bs4 import BeautifulSoup
 
-DISCORD_WEBHOOK = os.environ["DISCORD_WEBHOOK"]
+# 기차 전용 웹훅(나만 보는 채널). 없으면 공용 DISCORD_WEBHOOK 사용.
+DISCORD_WEBHOOK = os.environ.get("DISCORD_WEBHOOK_TRAIN") or os.environ["DISCORD_WEBHOOK"]
 STATE_FILE = "notices_state.json"
 HEADERS = {"User-Agent": "Mozilla/5.0 (notice-watch personal bot)"}
 

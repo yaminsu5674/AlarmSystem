@@ -9,7 +9,8 @@ import sys
 import json
 import urllib.request
 
-DISCORD_WEBHOOK = os.environ["DISCORD_WEBHOOK"]
+# 기차 전용 웹훅(나만 보는 채널). 없으면 공용 DISCORD_WEBHOOK 사용.
+DISCORD_WEBHOOK = os.environ.get("DISCORD_WEBHOOK_TRAIN") or os.environ["DISCORD_WEBHOOK"]
 KORAIL_ID = os.environ.get("KORAIL_ID")
 KORAIL_PW = os.environ.get("KORAIL_PW")
 SRT_ID    = os.environ.get("SRT_ID")

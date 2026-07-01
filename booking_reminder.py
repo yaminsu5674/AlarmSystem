@@ -12,7 +12,8 @@ import datetime
 import urllib.request
 from dateutil.relativedelta import relativedelta
 
-DISCORD_WEBHOOK = os.environ["DISCORD_WEBHOOK"]
+# 기차 전용 웹훅(나만 보는 채널). 없으면 공용 DISCORD_WEBHOOK 사용.
+DISCORD_WEBHOOK = os.environ.get("DISCORD_WEBHOOK_TRAIN") or os.environ["DISCORD_WEBHOOK"]
 
 WD = ["월", "화", "수", "목", "금", "토", "일"]  # Monday=0
 

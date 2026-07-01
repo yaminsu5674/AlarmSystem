@@ -20,6 +20,7 @@ jobs:
       - name: 공지 감시
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_TRAIN: ${{ secrets.DISCORD_WEBHOOK_TRAIN }}
         run: python notice_watch.py
       - name: 상태 저장 (변경 시 커밋)
         run: |

@@ -17,4 +17,5 @@ jobs:
       - name: 예매 오픈 리마인더 전송
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_TRAIN: ${{ secrets.DISCORD_WEBHOOK_TRAIN }}
         run: python booking_reminder.py

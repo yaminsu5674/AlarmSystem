@@ -8,7 +8,8 @@ import json
 import datetime
 import urllib.request
 
-DISCORD_WEBHOOK = os.environ["DISCORD_WEBHOOK"]
+# 습관 알림 전용 웹훅(여친도 보는 채널). 없으면 공용 DISCORD_WEBHOOK 사용.
+DISCORD_WEBHOOK = os.environ.get("DISCORD_WEBHOOK_HABIT") or os.environ["DISCORD_WEBHOOK"]
 
 # 눈운동 목록
 EYE = [
