@@ -39,9 +39,22 @@ def send(payload):
     urllib.request.urlopen(req, timeout=15)
 
 
+# 알림을 보내도 되는 KST 시간대 (평일 9~18시, 12시 제외)
+ALLOWED_HOURS = {9, 10, 11, 13, 14, 15, 16, 17, 18}
+
+
 def main():
     # KST 기준 시각으로 운동 선택 (UTC+9)
     kst = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+
+    # GitHub Actions 크론은 수십 분~몇 시간 지연될 수 있다.
+    # 이때 '지금 시각'으로 메시지를 만들면 18시 예약분이 밀려 '19시/21시'로
+    # 저녁에 잘못 발송된다. 실제 실행 시각이 허용 시간대(평일 근무시간)가
+    # 아니면 아예 보내지 않아, 지연된 실행이 저녁 알림으로 새는 걸 막는다.
+    if kst.weekday() >= 5 or kst.hour not in ALLOWED_HOURS:
+        print(f"발송 안 함: 허용 시간대 아님 (KST {kst.strftime('%a %H:%M')})")
+        return
+
     idx = kst.hour  # 시간마다 다른 운동
 
     payload = {
